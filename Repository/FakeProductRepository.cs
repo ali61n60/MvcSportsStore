@@ -6,7 +6,7 @@ using Models.IRepositories;
 
 namespace Repository
 {
-    class FakeProductRepository : IProductRepository
+    public class FakeProductRepository : IProductRepository
     {
         public IEnumerable<Product> Products => new List<Product> {
             new Product { Name = "Football", Price = 25 },
