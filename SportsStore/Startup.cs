@@ -23,8 +23,7 @@ namespace SportStore
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection= Configuration["Data:SportStoreProducts:ConnectionString"];
-            services.AddSingleton(new ApplicationDbContext(connection));
+            services.AddSingleton(new ApplicationDbContext(Configuration["Data:SportStoreProducts:ConnectionString"]));
             services.AddTransient<IProductRepository, EFProductRepository>();           
             services.AddMvc();
         }
