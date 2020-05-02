@@ -14,6 +14,10 @@ namespace Repository.Context
     {
         private string _connectioString;
     
+        public ApplicationDbContext()
+        {
+            _connectioString = "Data Source= .\\;Initial Catalog=SportsStore;Persist Security Info=True;User ID=ayoobfar_ali;Password=119801;MultipleActiveResultSets=true";
+        }
         public ApplicationDbContext(string s) {
             _connectioString = s;
         }
