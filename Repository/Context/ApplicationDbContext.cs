@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 //Add-Migration Initial
@@ -9,14 +11,17 @@ using System.Text;
 namespace Repository.Context
 {
     public class ApplicationDbContext : DbContext
-    {
-        string _connectionString = "Data Source= .\\;Initial Catalog=SportsStore;Persist Security Info=True;User ID=ayoobfar_ali;Password=119801;MultipleActiveResultSets=true";
+    {       
+        IConfiguration configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory()) // Directory where the json files are located
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) {        }
         public ApplicationDbContext() { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionString,
+            optionsBuilder.UseSqlServer(configuration["Data:SportStoreProducts:ConnectionString"],
                 x => x.MigrationsHistoryTable("__MigrationsHistory", "ad"));
         }
         public DbSet<Product> Products { get; set; }

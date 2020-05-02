@@ -10,8 +10,7 @@ namespace Repository
     {
         public static void EnsurePopulated(IApplicationBuilder app)
         {
-            ApplicationDbContext context = app.ApplicationServices
-                .GetRequiredService<ApplicationDbContext>();
+            ApplicationDbContext context = app.ApplicationServices.GetService<ApplicationDbContext>();
             if (!context.Products.Any())
             {
                 context.Products.AddRange(
