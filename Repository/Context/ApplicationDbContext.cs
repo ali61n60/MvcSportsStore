@@ -11,17 +11,16 @@ using System.Text;
 namespace Repository.Context
 {
     public class ApplicationDbContext : DbContext
-    {       
-        IConfiguration configuration = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory()) // Directory where the json files are located
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .Build();
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options) {        }
-        public ApplicationDbContext() { }
+    {
+        private string _connectioString;
+    
+        public ApplicationDbContext(string s) {
+            _connectioString = s;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(configuration["Data:SportStoreProducts:ConnectionString"],
+            optionsBuilder.UseSqlServer(_connectioString,
                 x => x.MigrationsHistoryTable("__MigrationsHistory", "ad"));
         }
         public DbSet<Product> Products { get; set; }

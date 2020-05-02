@@ -12,13 +12,19 @@ namespace SportStore
 {
     public class Startup
     {
-        
-       
+
+        IConfigurationRoot Configuration;
+        public Startup(IHostingEnvironment env)
+        {
+            Configuration = new ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.json").Build();
+        }
 
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddSingleton<ApplicationDbContext>();
+            services.AddSingleton<ApplicationDbContext>(new ApplicationDbContext(Configuration["Data:SportStoreProducts:ConnectionString"]));
+           
 
             services.AddTransient<IProductRepository, EFProductRepository>();           
             services.AddMvc();
