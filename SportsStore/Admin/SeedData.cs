@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Repository.Context;
+using System.Linq;
 
 namespace Repository
 {

@@ -23,8 +23,7 @@ namespace SportStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(
-                Configuration["Data:SportStoreProducts:ConnectionString"]));
+            options.UseSqlServer(Configuration["Data:SportStoreProducts:ConnectionString"]));
 
             services.AddTransient<IProductRepository, EFProductRepository>();           
             services.AddMvc();
@@ -41,6 +40,8 @@ namespace SportStore
                 name: "default",
                 template: "{controller=Product}/{action=List}/{id?}");
             });
+
+            SeedData.EnsurePopulated(app);
 
 
 

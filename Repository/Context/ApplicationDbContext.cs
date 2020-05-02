@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+//Add-Migration Initial
+//
 namespace Repository.Context
 {
     public class ApplicationDbContext : DbContext
