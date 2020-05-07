@@ -30,7 +30,9 @@ namespace SportsStore.Controllers
             {
                 CurrentPage = page,
                 ItemsPerPage = PageSize,
-                TotalItems = repository.Products.Count()
+                TotalItems = repository.Products
+                .Where(p => category == null || p.Category == category)
+                .Count()
             };
             productsListViewModel.CurrentCategory = category;
 
