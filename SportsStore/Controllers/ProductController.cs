@@ -18,18 +18,23 @@ namespace SportsStore.Controllers
             repository = repo;
         }
 
-        public ViewResult List(int page = 1)
-            => View(new ProductsListViewModel
+        public ViewResult List(string category, int page = 1)
+        {
+            ProductsListViewModel productsListViewModel = new ProductsListViewModel();
+            productsListViewModel.Products = repository.Products
+                .Where(p => category == null || p.Category == category)
+                .OrderBy(p => p.ProductID)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize);
+            productsListViewModel.PagingInfo = new PagingInfo
             {
-                Products = repository.Products.OrderBy(p => p.ProductID).Skip((page - 1) * PageSize)
-                .Take(PageSize),
-                PagingInfo = new PagingInfo
-                {
-                    CurrentPage = page,
-                    ItemsPerPage = PageSize,
-                    TotalItems = repository.Products.Count()
-                }
-            });
+                CurrentPage = page,
+                ItemsPerPage = PageSize,
+                TotalItems = repository.Products.Count()
+            };
+            productsListViewModel.CurrentCategory = category;
 
+            return View(productsListViewModel);
+        }
     }
 }
