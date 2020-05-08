@@ -68,5 +68,40 @@ namespace SportsStore.Tests
             Assert.AreEqual(0, target.Lines.Where(c => c.Product == p2).Count());
             Assert.AreEqual(2, target.Lines.Count());
         }
+
+        [Test]
+        public void Calculate_Cart_Total()
+        {
+            // Arrange - create some test products
+            Product p1 = new Product { ProductID = 1, Name = "P1", Price = 100M };
+            Product p2 = new Product { ProductID = 2, Name = "P2", Price = 50M };
+            // Arrange - create a new cart
+            Cart target = new Cart();
+            // Act
+            target.AddItem(p1, 1);
+            target.AddItem(p2, 1);
+            target.AddItem(p1, 3);
+            decimal result = target.ComputeTotalValue();
+            // Assert
+            Assert.AreEqual(450M, result);
+        }
+
+        [Test]
+        public void Can_Clear_Contents()
+        {
+            // Arrange - create some test products
+            Product p1 = new Product { ProductID = 1, Name = "P1", Price = 100M };
+            Product p2 = new Product { ProductID = 2, Name = "P2", Price = 50M };
+            // Arrange - create a new cart
+            Cart target = new Cart();
+            // Arrange - add some items
+            target.AddItem(p1, 1);
+            target.AddItem(p2, 1);
+            // Act - reset the cart
+            target.Clear();
+            // Assert
+            Assert.AreEqual(0, target.Lines.Count());
+        }
+
     }
-}
+    }
