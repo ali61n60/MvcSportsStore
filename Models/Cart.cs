@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Models
 {
-    class Cart
+    public class Cart
     {
         private List<CartLine> lineCollection = new List<CartLine>();
         public virtual void AddItem(Product product, int quantity)
