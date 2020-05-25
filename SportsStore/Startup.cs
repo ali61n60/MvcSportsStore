@@ -7,6 +7,7 @@ using Models.IRepositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Repository.Context;
+using Microsoft.AspNetCore.Http;
 
 namespace SportStore
 {
@@ -24,7 +25,11 @@ namespace SportStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(new ApplicationDbContext(Configuration["Data:SportStoreProducts:ConnectionString"]));
-            services.AddTransient<IProductRepository, EFProductRepository>();           
+            services.AddTransient<IProductRepository, EFProductRepository>();
+            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
             services.AddMvc();
             services.AddSession();
             services.AddMemoryCache();
